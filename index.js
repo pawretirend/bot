@@ -34,21 +34,19 @@ bot.on('message', (msg) => {
     const args = command.split(' ');
     const url = args[1];
     const time = args[2];
-    const thread = args[3];
-    const rate = args[4];
 
     // Memeriksa apakah format pesan benar
-    if (args.length === 5 && url && time && thread && rate) {
+    if (args.length === 3 && url && time) {
       // Menjalankan file mix.js dengan argumen yang diberikan
-      exec(`node mix.js ${url} ${time} ${thread} ${rate}`, (error, stdout, stderr) => {
+      exec(`node rapid.js x-requested-with ${time} 39 proxy.txt 9 ${url}`, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error: ${error.message}`);
-          bot.sendMessage(chatId, 'Successful');
+          bot.sendMessage(chatId, 'Gagal menjalankan perintah.');
           return;
         }
         if (stderr) {
           console.error(`stderr: ${stderr}`);
-          bot.sendMessage(chatId, 'Successful');
+          bot.sendMessage(chatId, 'Gagal menjalankan perintah.');
           return;
         }
         // Menampilkan output stdout jika berhasil
@@ -57,7 +55,7 @@ bot.on('message', (msg) => {
       });
     } else {
       // Memberi tahu pengguna bahwa format pesan tidak benar
-      bot.sendMessage(chatId, 'Format pesan tidak benar. Gunakan format: /mix [url] [time] [thread] [rate]');
+      bot.sendMessage(chatId, 'Format pesan tidak benar. Gunakan format: /mix [url] [time]');
     }
   }
 });
